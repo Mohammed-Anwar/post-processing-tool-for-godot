@@ -16,13 +16,11 @@ func main():
 		hint_string = "glich",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "glich_enable",
+		{name = "glich_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	
-	if not get_parent().glich_enable:
-		node.hide()
-		return properties
+	node.visible = get_parent().glich_show
 	
 	properties.append(
 		{name = "glich_layer",
@@ -50,7 +48,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	node.show()
 	layer = get_parent().glich_layer
 	node.material.set_shader_param("shake_power", get_parent().glich_power)
 	node.material.set_shader_param("shake_rate", get_parent().glich_rate)

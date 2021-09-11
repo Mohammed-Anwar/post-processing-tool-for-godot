@@ -15,13 +15,11 @@ func main():
 		hint_string = "adjustment",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "adjustment_enable",
+		{name = "adjustment_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
+	node.visible = get_parent().adjustment_show
 	
-	if not get_parent().adjustment_enable:
-		node.hide()
-		return properties
 	
 	properties.append(
 		{name = "adjustment_layer",
@@ -41,7 +39,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	node.show()
 	layer = get_parent().adjustment_layer
 	node.material.set_shader_param("brightness", get_parent().adjustment_brightnes)
 	node.material.set_shader_param("contrast", get_parent().adjustment_contrast)

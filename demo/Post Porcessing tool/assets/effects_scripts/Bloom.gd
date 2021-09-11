@@ -15,13 +15,11 @@ func main():
 		hint_string = "bloom_",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "bloom_enable",
+		{name = "bloom_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	
-	if not get_parent().bloom_enable:
-		node.hide()
-		return properties
+	node.visible = get_parent().bloom_show
 	
 	properties.append(
 		{name = "bloom_layer",
@@ -41,7 +39,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 		
 	# main values setup for effect
-	node.show()
 	layer = get_parent().bloom_layer
 	node.material.set_shader_param("bloomRadius", get_parent().bloom_radius)
 	node.material.set_shader_param("bloomThreshold", get_parent().bloom_threshold)

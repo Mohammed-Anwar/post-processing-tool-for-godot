@@ -15,13 +15,11 @@ func main():
 		hint_string = "noise",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "noise_enable",
+		{name = "noise_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	
-	if not get_parent().noise_enable:
-		node.hide()
-		return properties
+	node.visible = get_parent().noise_show
 	
 	properties.append(
 		{name = "noise_layer",
@@ -41,7 +39,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 		
 	# main values setup for effect
-	node.show()
 	layer = get_parent().noise_layer
 	node.material.set_shader_param("seed", get_parent().noise_seed)
 	node.material.set_shader_param("power", get_parent().noise_power)

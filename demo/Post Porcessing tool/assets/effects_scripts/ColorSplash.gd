@@ -15,21 +15,15 @@ func main():
 		hint_string = "color_splash",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "color_splash_enable",
+		{name = "color_splash_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	
-	if not get_parent().color_splash_enable:
-		node.hide()
-		return properties
+	node.visible = get_parent().color_splash_show
 	
 	properties.append(
 		{name = "color_splash_layer",
 		type = TYPE_INT,
-		usage = PROPERTY_USAGE_DEFAULT})
-	properties.append(
-		{name = "color_splash_hide",
-		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	properties.append(
 		{name = "color_splash_color",
@@ -41,9 +35,7 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	node.show()
 	layer = get_parent().color_splash_layer
-	node.material.set_shader_param("hide", get_parent().color_splash_hide)
 	node.material.set_shader_param("color", get_parent().color_splash_color)
 	node.material.set_shader_param("strength", get_parent().color_splash_strength)
 	

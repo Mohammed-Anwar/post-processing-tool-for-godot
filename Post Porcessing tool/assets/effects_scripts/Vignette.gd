@@ -15,13 +15,11 @@ func main():
 		hint_string = "vignette_",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "vignette_enable",
+		{name = "vignette_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	
-	if not get_parent().vignette_enable:
-		node.hide()
-		return properties
+	node.visible = get_parent().vignette_show
 	
 	properties.append(
 		{name = "vignette_layer",
@@ -49,7 +47,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	node.show()
 	layer = get_parent().vignette_layer
 	node.material.set_shader_param("player_position", get_parent().vignette_player_pos)
 	node.material.set_shader_param("color", get_parent().vignette_color)

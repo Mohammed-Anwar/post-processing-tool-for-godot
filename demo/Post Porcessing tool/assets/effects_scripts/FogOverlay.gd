@@ -15,15 +15,11 @@ func main():
 		hint_string = "fog_overlay",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "fog_overlay_enable",
+		{name = "fog_overlay_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
 	
-	if not get_parent().fog_overlay_enable:
-		node.hide()
-		return properties
-	
-
+	node.visible = get_parent().fog_overlay_show
 	properties.append(
 		{name = "fog_overlay_layer",
 		type = TYPE_INT,
@@ -52,16 +48,15 @@ func main():
 		{name = "fog_overlay_color",
 		type = TYPE_COLOR,
 		usage = PROPERTY_USAGE_DEFAULT})
+	
 	properties.append(
 		{name = "fog_overlay_noise_texture",
 		type = TYPE_OBJECT,
 		hint = PROPERTY_HINT_RESOURCE_TYPE,
-		hint_string = "Texture",
-		usage = PROPERTY_USAGE_DEFAULT
+		hint_string = "Texture"
 		})
 	
 	# main values setup for effect
-	node.show()
 	layer = get_parent().fog_overlay_layer
 	node.material.set_shader_param("octaves", get_parent().fog_overlay_octaves)
 	get_parent().fog_overlay_starting_amplitude = clamp(get_parent().fog_overlay_starting_amplitude, 0, .5)
@@ -72,7 +67,6 @@ func main():
 	node.material.set_shader_param("velocity", get_parent().fog_overlay_velocity)
 	node.material.set_shader_param("fog_color", get_parent().fog_overlay_color)
 	node.material.set_shader_param("noise", get_parent().fog_overlay_noise_texture)
-	get_parent().fog_overlay_noise_texture = get_parent().fog_overlay_noise_texture
 	
 	return properties
 

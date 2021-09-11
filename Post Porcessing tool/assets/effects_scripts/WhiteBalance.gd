@@ -16,14 +16,12 @@ func main():
 		hint_string = "white_balance",
 		usage = PROPERTY_USAGE_GROUP})
 	properties.append(
-		{name = "white_balance_enable",
+		{name = "white_balance_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
+	node.visible = get_parent().white_balance_show
+	$tint.visible = get_parent().white_balance_show
 	
-	if not get_parent().white_balance_enable:
-		node.hide()
-		$tint.hide()
-		return properties
 	
 	properties.append(
 		{name = "white_balance_layer",
@@ -37,9 +35,8 @@ func main():
 		{name = "white_balance_tint",
 		type = TYPE_REAL,
 		usage = PROPERTY_USAGE_DEFAULT})
+	
 	# main values setup for effect
-	node.show()
-	$tint.show()
 	layer = get_parent().white_balance_layer
 	node.material.set_shader_param("cool_color", get_parent().white_balance_cool_color)
 	node.material.set_shader_param("warm_color", get_parent().white_balance_warm_color)
