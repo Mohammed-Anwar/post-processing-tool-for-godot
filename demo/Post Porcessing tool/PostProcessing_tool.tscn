@@ -1,0 +1,283 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Post Porcessing tool/assets/PostProcessing_tool.gd" type="Script" id=1]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/Vignette.res" type="Material" id=2]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/Adjustments.res" type="Material" id=3]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Vignette.gd" type="Script" id=4]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/ChromaticAberration.gd" type="Script" id=5]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/ColorSplash.gd" type="Script" id=6]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/WhiteBalance.gd" type="Script" id=7]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Adjustments.gd" type="Script" id=8]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Noise.gd" type="Script" id=9]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Bloom.gd" type="Script" id=10]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/FogOverlay.gd" type="Script" id=11]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Glich.gd" type="Script" id=12]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/ColorSplash.res" type="Material" id=13]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/WhiteBalance.res" type="Material" id=14]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/ChromaticAberration.res" type="Material" id=15]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/Noise.res" type="Material" id=16]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/Bloom.res" type="Material" id=17]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/FogOverlay.res" type="Material" id=18]
+[ext_resource path="res://Post Porcessing tool/assets/shaders/Glitch.res" type="Material" id=19]
+[ext_resource path="res://Post Porcessing tool/assets/green_color.res" type="Texture" id=20]
+[ext_resource path="res://Post Porcessing tool/assets/purple_color.res" type="Texture" id=21]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D green_color: hint_black;
+uniform sampler2D purple_color: hint_black;
+uniform float tint = 0;
+
+void fragment(){
+	
+	vec4 input_color = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0);
+	
+	float grayscale_value = dot(input_color.rgb, vec3(0.299, 0.587, 0.114));
+	vec3 sampled_color;
+	if (tint > 0.0){
+		sampled_color = texture(green_color, vec2(grayscale_value, 0.0)).rgb;
+		COLOR.rgb = mix(input_color.rgb, sampled_color, tint);
+	}
+	else{
+		sampled_color = texture(purple_color, vec2(grayscale_value, 0.0)).rgb;
+		COLOR.rgb = mix(input_color.rgb, sampled_color, tint * -1.0);
+	}
+	COLOR.a = input_color.a;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/tint = 0.0
+shader_param/green_color = ExtResource( 20 )
+shader_param/purple_color = ExtResource( 21 )
+
+[node name="PostProcessing_tool" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+adjustment_enable = false
+white_balance_enable = false
+color_splash_enable = false
+bloom_enable = false
+chromatc_aberration_enable = false
+noise_enable = false
+glich_enable = false
+fog_overlay_enable = false
+vignette_enable = false
+
+[node name="Adjustments" type="CanvasLayer" parent="."]
+script = ExtResource( 8 )
+
+[node name="Control" type="Control" parent="Adjustments"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Adjustments/Control"]
+visible = false
+material = ExtResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WhiteBalance" type="CanvasLayer" parent="."]
+script = ExtResource( 7 )
+
+[node name="tint" type="ColorRect" parent="WhiteBalance"]
+visible = false
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="WhiteBalance"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="WhiteBalance/Control"]
+copy_mode = 2
+rect = Rect2( 0, 0, 200, 200 )
+
+[node name="temperature" type="ColorRect" parent="WhiteBalance/Control/BackBufferCopy"]
+visible = false
+material = ExtResource( 14 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 824.0
+margin_bottom = 400.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorSplash" type="CanvasLayer" parent="."]
+script = ExtResource( 6 )
+
+[node name="Control" type="Control" parent="ColorSplash"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="ColorSplash/Control"]
+visible = false
+material = ExtResource( 13 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bloom" type="CanvasLayer" parent="."]
+script = ExtResource( 10 )
+
+[node name="Control" type="Control" parent="Bloom"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Bloom/Control"]
+visible = false
+material = ExtResource( 17 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChromaticAberration" type="CanvasLayer" parent="."]
+script = ExtResource( 5 )
+
+[node name="Control" type="Control" parent="ChromaticAberration"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="ColorRect" type="ColorRect" parent="ChromaticAberration/Control"]
+visible = false
+material = ExtResource( 15 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Noise" type="CanvasLayer" parent="."]
+script = ExtResource( 9 )
+
+[node name="Control" type="Control" parent="Noise"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Noise/Control"]
+visible = false
+material = ExtResource( 16 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Glitch" type="CanvasLayer" parent="."]
+script = ExtResource( 12 )
+
+[node name="Control" type="Control" parent="Glitch"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="Glitch/Control"]
+visible = false
+material = ExtResource( 19 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FogOverlay" type="CanvasLayer" parent="."]
+script = ExtResource( 11 )
+
+[node name="Control" type="Control" parent="FogOverlay"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="FogOverlay/Control"]
+visible = false
+material = ExtResource( 18 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vignette" type="CanvasLayer" parent="."]
+script = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="Vignette"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Vignette/Control"]
+visible = false
+material = ExtResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="resized" from="." to="." method="_on_PostProcessing_tool_resized"]
+[connection signal="visibility_changed" from="." to="." method="_on_PostProcessing_tool_visibility_changed"]

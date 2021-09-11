@@ -1,0 +1,61 @@
+tool
+extends CanvasLayer
+
+func _physics_process(delta):
+	main()
+
+func main():
+	var properties = []
+	var node = get_node("Control/ColorRect")
+	
+	# inspactore exports
+	properties.append(
+		{name = "Vignette",
+		type = TYPE_NIL,
+		hint_string = "vignette_",
+		usage = PROPERTY_USAGE_GROUP})
+	properties.append(
+		{name = "vignette_enable",
+		type = TYPE_BOOL,
+		usage = PROPERTY_USAGE_DEFAULT})
+	
+	if not get_parent().vignette_enable:
+		node.hide()
+		return properties
+	
+	properties.append(
+		{name = "vignette_layer",
+		type = TYPE_INT,
+		usage = PROPERTY_USAGE_DEFAULT})
+	properties.append(
+		{name = "vignette_player_pos",
+		type = TYPE_VECTOR2,
+		usage = PROPERTY_USAGE_DEFAULT})
+	properties.append(
+		{name = "vignette_color",
+		type = TYPE_COLOR,
+		usage = PROPERTY_USAGE_DEFAULT})
+	properties.append(
+		{name = "vignette_multiplier",
+			type = TYPE_REAL,
+			usage = PROPERTY_USAGE_DEFAULT})
+	properties.append(
+		{name = "vignette_scale",
+		type = TYPE_REAL,
+		usage = PROPERTY_USAGE_DEFAULT})
+	properties.append(
+		{name = "vignette_softness",
+		type = TYPE_REAL,
+		usage = PROPERTY_USAGE_DEFAULT})
+	
+	# main values setup for effect
+	node.show()
+	layer = get_parent().vignette_layer
+	node.material.set_shader_param("player_position", get_parent().vignette_player_pos)
+	node.material.set_shader_param("color", get_parent().vignette_color)
+	node.material.set_shader_param("MULTIPLIER", get_parent().vignette_multiplier)
+	node.material.set_shader_param("SCALE", get_parent().vignette_scale)
+	node.material.set_shader_param("SOFTNESS", get_parent().vignette_softness)
+	
+	return properties
+
