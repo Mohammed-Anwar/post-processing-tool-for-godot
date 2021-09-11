@@ -3,10 +3,10 @@
 [ext_resource path="res://Post Porcessing tool/assets/PostProcessing_tool.gd" type="Script" id=1]
 [ext_resource path="res://Post Porcessing tool/assets/shaders/Vignette.res" type="Material" id=2]
 [ext_resource path="res://Post Porcessing tool/assets/shaders/Adjustments.res" type="Material" id=3]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Vignette.gd" type="Script" id=4]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/WhiteBalance.gd" type="Script" id=4]
 [ext_resource path="res://Post Porcessing tool/assets/effects_scripts/ChromaticAberration.gd" type="Script" id=5]
 [ext_resource path="res://Post Porcessing tool/assets/effects_scripts/ColorSplash.gd" type="Script" id=6]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/WhiteBalance.gd" type="Script" id=7]
+[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Vignette.gd" type="Script" id=7]
 [ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Adjustments.gd" type="Script" id=8]
 [ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Noise.gd" type="Script" id=9]
 [ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Bloom.gd" type="Script" id=10]
@@ -60,40 +60,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 adjustment_show = false
-adjustment_layer = 1
 adjustment_brightnes = 1.0
 adjustment_contrast = 1.0
 adjustment_saturation = 1.0
 white_balance_show = false
-white_balance_layer = 1
 white_balance_temperature = 0.0
 white_balance_tint = 0.0
 color_splash_show = false
-color_splash_layer = 1
 color_splash_color = Color( 0, 0, 0, 1 )
 color_splash_strength = 0.2
 bloom_show = false
-bloom_layer = 1
 bloom_radius = 1
 bloom_threshold = 1
 bloom_intensity = 1
 chromatc_aberration_show = false
-chromatc_aberration_layer = 1
 chromatc_aberration_strength = 0.5
 noise_show = false
-noise_layer = 1
 noise_power = 0.01
 noise_seed = 80
 noise_speed = 0.1
-glich_show = false
-glich_layer = 1
-glich_power = 0.03
-glich_rate = 0.2
-glich_speed = 5.0
-glich_block_size = 30.5
-glich_color_rate = 0.01
+glitch_show = false
+glitch_power = 0.03
+glitch_rate = 0.2
+glitch_speed = 5.0
+glitch_block_size = 30.5
+glitch_color_rate = 0.01
 fog_overlay_show = false
-fog_overlay_layer = 1
 fog_overlay_octaves = 4
 fog_overlay_starting_amplitude = 0.5
 fog_overlay_starting_frequency = 1.0
@@ -102,63 +94,52 @@ fog_overlay_velocity = Vector2( 1, 1 )
 fog_overlay_color = Color( 0, 0, 0, 1 )
 fog_overlay_noise_texture = null
 vignette_show = false
-vignette_layer = 1
 vignette_player_pos = Vector2( 0.5, 0.5 )
 vignette_color = Color( 0, 0, 0, 1 )
 vignette_multiplier = 1.0
 vignette_scale = 0.5
 vignette_softness = 1.0
 
-[node name="Adjustments" type="CanvasLayer" parent="."]
-script = ExtResource( 8 )
-
-[node name="Control" type="Control" parent="Adjustments"]
+[node name="Adjustments" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 8 )
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Adjustments/Control"]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Adjustments"]
+copy_mode = 2
+rect = Rect2( 0, 0, 300, 200 )
+
+[node name="ColorRect" type="ColorRect" parent="Adjustments/BackBufferCopy"]
 visible = false
 material = ExtResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 724.0
+margin_bottom = 400.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WhiteBalance" type="CanvasLayer" parent="."]
-script = ExtResource( 7 )
-
-[node name="tint" type="ColorRect" parent="WhiteBalance"]
-visible = false
-material = SubResource( 2 )
+[node name="WhiteBalance" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 4 )
 __meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Control" type="Control" parent="WhiteBalance"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-__meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="BackBufferCopy" type="BackBufferCopy" parent="WhiteBalance/Control"]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="WhiteBalance"]
 copy_mode = 2
 rect = Rect2( 0, 0, 200, 200 )
 
-[node name="temperature" type="ColorRect" parent="WhiteBalance/Control/BackBufferCopy"]
+[node name="temperature" type="ColorRect" parent="WhiteBalance/BackBufferCopy"]
 visible = false
 material = ExtResource( 14 )
 anchor_right = 1.0
@@ -170,85 +151,108 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorSplash" type="CanvasLayer" parent="."]
-script = ExtResource( 6 )
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="WhiteBalance"]
+copy_mode = 2
+rect = Rect2( 0, 0, 200, 200 )
 
-[node name="Control" type="Control" parent="ColorSplash"]
+[node name="tint" type="ColorRect" parent="WhiteBalance/BackBufferCopy2"]
+visible = false
+material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 824.0
+margin_bottom = 400.0
 mouse_filter = 2
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="ColorSplash/Control"]
+[node name="ColorSplash" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="ColorSplash"]
+copy_mode = 2
+rect = Rect2( 0, 0, 200, 200 )
+
+[node name="ColorRect" type="ColorRect" parent="ColorSplash/BackBufferCopy"]
 visible = false
 material = ExtResource( 13 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 824.0
+margin_bottom = 400.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bloom" type="CanvasLayer" parent="."]
-script = ExtResource( 10 )
-
-[node name="Control" type="Control" parent="Bloom"]
+[node name="Bloom" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Bloom/Control"]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="Bloom"]
+copy_mode = 2
+rect = Rect2( 0, 0, 200, 200 )
+
+[node name="ColorRect" type="ColorRect" parent="Bloom/BackBufferCopy"]
 visible = false
 material = ExtResource( 17 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 824.0
+margin_bottom = 400.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChromaticAberration" type="CanvasLayer" parent="."]
-script = ExtResource( 5 )
-
-[node name="Control" type="Control" parent="ChromaticAberration"]
+[node name="ChromaticAberration" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 5 )
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="ColorRect" type="ColorRect" parent="ChromaticAberration/Control"]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="ChromaticAberration"]
+copy_mode = 2
+rect = Rect2( 0, 0, 200, 200 )
+
+[node name="ColorRect" type="ColorRect" parent="ChromaticAberration/BackBufferCopy"]
 visible = false
 material = ExtResource( 15 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 824.0
+margin_bottom = 400.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Noise" type="CanvasLayer" parent="."]
-script = ExtResource( 9 )
-
-[node name="Control" type="Control" parent="Noise"]
+[node name="Noise" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 9 )
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Noise/Control"]
+[node name="ColorRect" type="ColorRect" parent="Noise"]
 visible = false
 material = ExtResource( 16 )
 anchor_right = 1.0
@@ -258,15 +262,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Glitch" type="CanvasLayer" parent="."]
-script = ExtResource( 12 )
-
-[node name="Control" type="Control" parent="Glitch"]
+[node name="Glitch" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ColorRect" type="ColorRect" parent="Glitch/Control"]
+[node name="ColorRect" type="ColorRect" parent="Glitch"]
 visible = false
 material = ExtResource( 19 )
 anchor_right = 1.0
@@ -276,18 +281,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FogOverlay" type="CanvasLayer" parent="."]
-script = ExtResource( 11 )
-
-[node name="Control" type="Control" parent="FogOverlay"]
+[node name="FogOverlay" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="FogOverlay/Control"]
+[node name="ColorRect" type="ColorRect" parent="FogOverlay"]
 visible = false
 material = ExtResource( 18 )
 anchor_right = 1.0
@@ -297,19 +300,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Vignette" type="CanvasLayer" parent="."]
-script = ExtResource( 4 )
-
-[node name="Control" type="Control" parent="Vignette"]
+[node name="Vignette" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 7 )
 __meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="Vignette/Control"]
+[node name="ColorRect" type="ColorRect" parent="Vignette"]
 visible = false
 material = ExtResource( 2 )
 anchor_right = 1.0

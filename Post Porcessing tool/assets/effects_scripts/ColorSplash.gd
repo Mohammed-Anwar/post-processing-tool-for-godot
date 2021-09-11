@@ -1,12 +1,14 @@
 tool
-extends CanvasLayer
+extends Control
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
+	$BackBufferCopy/ColorRect.rect_size = rect_size
 	main()
 
 func main():
 	var properties = []
-	var node = $Control/ColorRect
+	var node = $BackBufferCopy/ColorRect
 	
 	# inspactore exports 
 	properties.append(
@@ -22,10 +24,6 @@ func main():
 	node.visible = get_parent().color_splash_show
 	
 	properties.append(
-		{name = "color_splash_layer",
-		type = TYPE_INT,
-		usage = PROPERTY_USAGE_DEFAULT})
-	properties.append(
 		{name = "color_splash_color",
 		type = TYPE_COLOR,
 		usage = PROPERTY_USAGE_DEFAULT})
@@ -35,7 +33,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	layer = get_parent().color_splash_layer
 	node.material.set_shader_param("color", get_parent().color_splash_color)
 	node.material.set_shader_param("strength", get_parent().color_splash_strength)
 	

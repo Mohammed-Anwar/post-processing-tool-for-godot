@@ -7,6 +7,7 @@ var velocity = Vector2()
 
 var max_speed = 2
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
 	
 	if Input.is_action_pressed("ui_up"): # go up

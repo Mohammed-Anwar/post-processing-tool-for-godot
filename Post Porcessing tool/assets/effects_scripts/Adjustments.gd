@@ -1,12 +1,14 @@
 tool
-extends CanvasLayer
+extends Control
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
+	$BackBufferCopy/ColorRect.rect_size = rect_size
 	main()
 
 func main():
 	var properties = []
-	var node = $Control/ColorRect
+	var node = $BackBufferCopy/ColorRect
 	
 	# inspactore exports 
 	properties.append(
@@ -18,13 +20,9 @@ func main():
 		{name = "adjustment_show",
 		type = TYPE_BOOL,
 		usage = PROPERTY_USAGE_DEFAULT})
+	
 	node.visible = get_parent().adjustment_show
 	
-	
-	properties.append(
-		{name = "adjustment_layer",
-		type = TYPE_INT,
-		usage = PROPERTY_USAGE_DEFAULT})
 	properties.append(
 		{name = "adjustment_brightnes",
 		type = TYPE_REAL,
@@ -39,7 +37,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	layer = get_parent().adjustment_layer
 	node.material.set_shader_param("brightness", get_parent().adjustment_brightnes)
 	node.material.set_shader_param("contrast", get_parent().adjustment_contrast)
 	node.material.set_shader_param("saturation", get_parent().adjustment_saturation)

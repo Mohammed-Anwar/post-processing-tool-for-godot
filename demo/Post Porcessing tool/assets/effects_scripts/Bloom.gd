@@ -1,12 +1,14 @@
 tool
-extends CanvasLayer
+extends Control
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
+	$BackBufferCopy/ColorRect.rect_size = rect_size
 	main()
 
 func main():
 	var properties = []
-	var node = $Control/ColorRect
+	var node = $BackBufferCopy/ColorRect
 	
 	# inspactore exports 
 	properties.append(
@@ -22,10 +24,6 @@ func main():
 	node.visible = get_parent().bloom_show
 	
 	properties.append(
-		{name = "bloom_layer",
-		type = TYPE_INT,
-		usage = PROPERTY_USAGE_DEFAULT})
-	properties.append(
 		{name = "bloom_radius",
 		type = TYPE_REAL,
 		usage = PROPERTY_USAGE_DEFAULT})
@@ -39,7 +37,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 		
 	# main values setup for effect
-	layer = get_parent().bloom_layer
 	node.material.set_shader_param("bloomRadius", get_parent().bloom_radius)
 	node.material.set_shader_param("bloomThreshold", get_parent().bloom_threshold)
 	node.material.set_shader_param("bloomIntensity", get_parent().bloom_intensity)

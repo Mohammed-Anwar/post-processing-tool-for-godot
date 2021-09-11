@@ -3,7 +3,6 @@ extends Control
 
 # adjustment
 var adjustment_show = false setget set_adjustment
-var adjustment_layer = 1
 var adjustment_brightnes = 1.0
 var adjustment_contrast = 1.0
 var adjustment_saturation = 1.0
@@ -42,13 +41,12 @@ var noise_seed = 80
 var noise_speed = 0.1
 
 # glich
-var glich_show = false setget _set_glich
-var glich_layer = 1
-var glich_power = 0.03
-var glich_rate = 0.2
-var glich_speed = 5.0
-var glich_block_size = 30.5
-var glich_color_rate = 0.01
+var glitch_show = false setget _set_glich
+var glitch_power = 0.03
+var glitch_rate = 0.2
+var glitch_speed = 5.0
+var glitch_block_size = 30.5
+var glitch_color_rate = 0.01
 
 # fog overlay
 var fog_overlay_show = false setget _set_fog_overlay
@@ -76,7 +74,7 @@ func _set_fog_overlay(value):
 	pass
 
 func _set_glich(value):
-	glich_show = value
+	glitch_show = value
 	property_list_changed_notify()
 	pass
 
@@ -117,7 +115,6 @@ func set_color_splash(value):
 
 func _get_property_list():
 	var properties = []
-	var pro = []
 	
 	# make the category
 	properties.append({

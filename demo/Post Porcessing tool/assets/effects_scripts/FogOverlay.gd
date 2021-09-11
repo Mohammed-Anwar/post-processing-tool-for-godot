@@ -1,12 +1,13 @@
 tool
-extends CanvasLayer
+extends Control
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
 	main()
 
 func main():
 	var properties = []
-	var node = get_node("Control/ColorRect")
+	var node = $ColorRect
 	
 	# inspactore exports
 	properties.append(
@@ -20,10 +21,7 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	node.visible = get_parent().fog_overlay_show
-	properties.append(
-		{name = "fog_overlay_layer",
-		type = TYPE_INT,
-		usage = PROPERTY_USAGE_DEFAULT})
+	
 	properties.append(
 		{name = "fog_overlay_octaves",
 		type = TYPE_INT,
@@ -57,7 +55,6 @@ func main():
 		})
 	
 	# main values setup for effect
-	layer = get_parent().fog_overlay_layer
 	node.material.set_shader_param("octaves", get_parent().fog_overlay_octaves)
 	get_parent().fog_overlay_starting_amplitude = clamp(get_parent().fog_overlay_starting_amplitude, 0, .5)
 	node.material.set_shader_param("starting_amplitude", get_parent().fog_overlay_starting_amplitude)

@@ -1,12 +1,13 @@
 tool
-extends CanvasLayer
+extends Control
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
 	main()
 
 func main():
 	var properties = []
-	var node = get_node("Control/ColorRect")
+	var node = $ColorRect
 	
 	# inspactore exports
 	properties.append(
@@ -21,10 +22,6 @@ func main():
 	
 	node.visible = get_parent().vignette_show
 	
-	properties.append(
-		{name = "vignette_layer",
-		type = TYPE_INT,
-		usage = PROPERTY_USAGE_DEFAULT})
 	properties.append(
 		{name = "vignette_player_pos",
 		type = TYPE_VECTOR2,
@@ -47,7 +44,6 @@ func main():
 		usage = PROPERTY_USAGE_DEFAULT})
 	
 	# main values setup for effect
-	layer = get_parent().vignette_layer
 	node.material.set_shader_param("player_position", get_parent().vignette_player_pos)
 	node.material.set_shader_param("color", get_parent().vignette_color)
 	node.material.set_shader_param("MULTIPLIER", get_parent().vignette_multiplier)

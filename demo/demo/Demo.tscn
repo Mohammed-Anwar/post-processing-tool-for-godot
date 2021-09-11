@@ -14,6 +14,11 @@
 [ext_resource path="res://Post Porcessing tool/PostProcessing_tool.tscn" type="PackedScene" id=12]
 [ext_resource path="res://demo/Demo.gd" type="Script" id=13]
 
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+noise = SubResource( 2 )
+
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 3 ) ],
@@ -26,11 +31,6 @@ animations = [ {
 "name": "walk",
 "speed": 10.0
 } ]
-
-[sub_resource type="OpenSimplexNoise" id=2]
-
-[sub_resource type="NoiseTexture" id=3]
-noise = SubResource( 2 )
 
 [node name="Demo" type="Node"]
 script = ExtResource( 13 )
@@ -47,11 +47,31 @@ cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( -65523, 1, 0, 41, 1, 0, 65574, 4, 0, 131100, 0, 0, 196659, 3, 0, 327683, 1, 0, 327705, 4, 0, 393269, 4, 0, 524302, 4, 0, 524326, 4, 0, 655417, 3, 0, 720917, 2, 0, 720922, 4, 0, 720936, 1, 0, 720949, 1, 0, 851968, 4, 0, 851985, 0, 0, 917510, 3, 0, 917534, 0, 0, 917554, 4, 0, 1179681, 2, 0, 1245223, 3, 0, 1376295, 4, 0, 1376304, 0, 0, 1376309, 3, 0, 1441804, 3, 0, 1441817, 4, 0, 1507332, 4, 0, 1572878, 1, 0, 1572909, 3, 0, 1638436, 1, 0, 1638447, 1, 0, 1638462, 3, 0, 1703965, 0, 0, 1835010, 2, 0, 1835032, 2, 0, 1835051, 3, 0, 1900553, 2, 0, 2031645, 0, 0, 2228250, 2, 0, 2293762, 4, 0, 2293777, 4, 0 )
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="PostProcessing_tool" parent="CanvasLayer2" instance=ExtResource( 12 )]
+adjustment_show = true
+adjustment_brightnes = 1.365
+adjustment_contrast = 0.616
+adjustment_saturation = 1.185
+white_balance_show = true
+white_balance_temperature = 0.435
+white_balance_tint = 0.226
+chromatc_aberration_show = true
+chromatc_aberration_strength = 0.2
+fog_overlay_show = true
+fog_overlay_octaves = 9
+fog_overlay_starting_amplitude = 0.205
+fog_overlay_velocity = Vector2( -1, 0 )
+fog_overlay_noise_texture = SubResource( 3 )
+vignette_show = true
+vignette_scale = 0.81
+
 [node name="player" type="AnimatedSprite" parent="."]
 position = Vector2( 513.919, 278.685 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 script = ExtResource( 9 )
 
@@ -71,26 +91,5 @@ text = "hide"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="PostProcessing_tool" parent="." instance=ExtResource( 12 )]
-adjustment_show = true
-adjustment_brightnes = 1.159
-adjustment_contrast = 1.301
-adjustment_saturation = 0.69
-white_balance_show = true
-white_balance_temperature = 0.472
-white_balance_tint = -0.218
-chromatc_aberration_show = true
-chromatc_aberration_strength = 0.2
-fog_overlay_show = true
-fog_overlay_starting_amplitude = 0.273
-fog_overlay_starting_frequency = 0.897
-fog_overlay_shift = 0.0
-fog_overlay_velocity = Vector2( -1, 0 )
-fog_overlay_color = Color( 0, 0, 0, 0.435294 )
-fog_overlay_noise_texture = SubResource( 3 )
-vignette_show = true
-vignette_scale = 0.772
-vignette_softness = 1.034
 
 [connection signal="pressed" from="CanvasLayer/hide_show_button" to="." method="_on_hide_show_button_pressed"]
