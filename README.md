@@ -11,8 +11,8 @@ in your Godot project and only for godot projects
  1. clone(download) the project
  2. copy the "Post Processing tool" folder that is inside the clone(download)
  3. paste the copied folder in your Godot project folder
- 4. open your project using Godot and you will be fined "Post Processing tool" folder in the file system
- 5. open that folder and you will be fined scene with the name "PostProcessing_tool.tscn" add it to your scene that you want to run the post-processing into
+ 4. open your project using Godot and you will find "Post Processing tool" folder in the file system
+ 5. open that folder and you will find scene with the name "PostProcessing_tool.tscn" add it to your scene that you want to run the post-processing into
  6. you will find a new node in the scene that have all the effects in its inspector
 
 ### gif
@@ -21,7 +21,7 @@ in your Godot project and only for godot projects
 ## how to use 
 ### use an effect
 in the inspector of the PostProcessing_tool node, you will find all the effects in groups 
-in any group effect, you will be fined the show button that shows the effect
+in any group effect, you will find the show button that shows the effect
 and the properties of that effect
 you can play in that properties to get some awesome results
 
@@ -29,9 +29,12 @@ you can play in that properties to get some awesome results
 
 ### calling property using script
 you can call a property using gdscrript using the normal method
- ```get_node("path/to/PostProcessing_tool/node").EfectName_PropertyName ```
- example of setting scale property of vignette to new value
- ```get_node("PostProcessing_tool").vignette_scale = vector2(1.5, 1.5)```
+
+```get_node("path/to/PostProcessing_tool/node").EfectName_PropertyName ```
+
+example of setting scale property of vignette to new value
+
+```get_node("PostProcessing_tool").vignette_scale = vector2(1.5, 1.5)```
  
 ### make an object doesn't affect by any effect
  the tool is like any control node
@@ -39,7 +42,7 @@ you can call a property using gdscrript using the normal method
  so all the nodes above it should be effected
  and all the nodes under it will not be affected
  
-### follow player, effect in the whole level/scene
+### follow player (effect in the whole level/scene)
 to make the tool effected in whole the scene or level
 you can change its rect_size property so it gets whole the map
 or you can just make it follow the player 
@@ -48,11 +51,13 @@ and put the post-processing tool as a child to that CanvasLayer
 like that it will be always effecting whole the viewport
 and if the player has a camera that follows him
 the canvas layer will do the same and follow him
+
 ![](https://media.discordapp.net/attachments/888846681712525332/888847177101758514/unknown.png)
 
 ## some alerts
 ### it is a control node so use it as a control node
 that's mean you have to put it under a 2D node to get the Layout button in the top
+
 ![](https://media.discordapp.net/attachments/888846681712525332/888846701236994058/unknown.png)
 ### don't change in the original scene/code
 if you change anything in the original scene of the tool
