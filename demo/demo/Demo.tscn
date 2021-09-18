@@ -14,12 +14,12 @@
 [ext_resource path="res://Post Porcessing tool/PostProcessing_tool.tscn" type="PackedScene" id=12]
 [ext_resource path="res://demo/Demo.gd" type="Script" id=13]
 
-[sub_resource type="OpenSimplexNoise" id=2]
+[sub_resource type="OpenSimplexNoise" id=1]
 
-[sub_resource type="NoiseTexture" id=3]
-noise = SubResource( 2 )
+[sub_resource type="NoiseTexture" id=2]
+noise = SubResource( 1 )
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 3 ) ],
 "loop": true,
@@ -63,15 +63,15 @@ fog_overlay_show = true
 fog_overlay_octaves = 9
 fog_overlay_starting_amplitude = 0.205
 fog_overlay_velocity = Vector2( -1, 0 )
-fog_overlay_noise_texture = SubResource( 3 )
+fog_overlay_noise_texture = SubResource( 2 )
 vignette_show = true
 vignette_scale = 0.81
 
 [node name="player" type="AnimatedSprite" parent="."]
 position = Vector2( 513.919, 278.685 )
-frames = SubResource( 1 )
+frames = SubResource( 3 )
 animation = "idle"
-frame = 3
+frame = 2
 playing = true
 script = ExtResource( 9 )
 
