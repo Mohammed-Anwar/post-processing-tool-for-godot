@@ -56,7 +56,7 @@ the canvas layer will do the same and follow him
 
 ## some alerts
 ### it is a control node so use it as a control node
-that's mean you have to put it under a 2D node to get the Layout button in the top
+that's mean you have to put it under a normal node (not 2D or 3D node) to get the Layout button in the top
 
 ![](https://media.discordapp.net/attachments/888846681712525332/888846701236994058/unknown.png)
 ### don't change in the original scene/code
