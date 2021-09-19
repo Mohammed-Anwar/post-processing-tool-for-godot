@@ -1,26 +1,26 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://Post Porcessing tool/assets/PostProcessing_tool.gd" type="Script" id=1]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/Vignette.res" type="Material" id=2]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/Adjustments.res" type="Material" id=3]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/WhiteBalance.gd" type="Script" id=4]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/ChromaticAberration.gd" type="Script" id=5]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/ColorSplash.gd" type="Script" id=6]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Vignette.gd" type="Script" id=7]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Adjustments.gd" type="Script" id=8]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Noise.gd" type="Script" id=9]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Bloom.gd" type="Script" id=10]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/FogOverlay.gd" type="Script" id=11]
-[ext_resource path="res://Post Porcessing tool/assets/effects_scripts/Glich.gd" type="Script" id=12]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/ColorSplash.res" type="Material" id=13]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/WhiteBalance.res" type="Material" id=14]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/ChromaticAberration.res" type="Material" id=15]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/Noise.res" type="Material" id=16]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/Bloom.res" type="Material" id=17]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/FogOverlay.res" type="Material" id=18]
-[ext_resource path="res://Post Porcessing tool/assets/shaders/Glitch.res" type="Material" id=19]
-[ext_resource path="res://Post Porcessing tool/assets/green_color.res" type="Texture" id=20]
-[ext_resource path="res://Post Porcessing tool/assets/purple_color.res" type="Texture" id=21]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/Adjustments.gd" type="Script" id=1]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/Bloom.gd" type="Script" id=2]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/WhiteBalance.gd" type="Script" id=3]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/ChromaticAberration.gd" type="Script" id=4]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/Vignette.gd" type="Script" id=5]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/ColorSplash.gd" type="Script" id=6]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/Noise.gd" type="Script" id=7]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/FogOverlay.gd" type="Script" id=8]
+[ext_resource path="res://Post processing tool/assets/effects_scripts/Glich.gd" type="Script" id=9]
+[ext_resource path="res://Post processing tool/assets/PostProcessing_tool.gd" type="Script" id=10]
+[ext_resource path="res://Post processing tool/assets/shaders/WhiteBalance.res" type="Material" id=11]
+[ext_resource path="res://Post processing tool/assets/shaders/ChromaticAberration.res" type="Material" id=12]
+[ext_resource path="res://Post processing tool/assets/shaders/Noise.res" type="Material" id=13]
+[ext_resource path="res://Post processing tool/assets/shaders/Vignette.res" type="Material" id=14]
+[ext_resource path="res://Post processing tool/assets/shaders/Bloom.res" type="Material" id=15]
+[ext_resource path="res://Post processing tool/assets/shaders/Glitch.res" type="Material" id=16]
+[ext_resource path="res://Post processing tool/assets/green_color.res" type="Texture" id=17]
+[ext_resource path="res://Post processing tool/assets/purple_color.res" type="Texture" id=18]
+[ext_resource path="res://Post processing tool/assets/shaders/Adjustments.res" type="Material" id=19]
+[ext_resource path="res://Post processing tool/assets/shaders/ColorSplash.res" type="Material" id=20]
+[ext_resource path="res://Post processing tool/assets/shaders/FogOverlay.res" type="Material" id=21]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -49,13 +49,13 @@ void fragment(){
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/tint = 0.0
-shader_param/green_color = ExtResource( 20 )
-shader_param/purple_color = ExtResource( 21 )
+shader_param/green_color = ExtResource( 17 )
+shader_param/purple_color = ExtResource( 18 )
 
 [node name="PostProcessing_tool" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -104,7 +104,7 @@ vignette_softness = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 8 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -115,7 +115,7 @@ rect = Rect2( 0, 0, 300, 200 )
 
 [node name="ColorRect" type="ColorRect" parent="Adjustments/BackBufferCopy"]
 visible = false
-material = ExtResource( 3 )
+material = ExtResource( 19 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 724.0
@@ -129,7 +129,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
@@ -141,7 +141,7 @@ rect = Rect2( 0, 0, 200, 200 )
 
 [node name="temperature" type="ColorRect" parent="WhiteBalance/BackBufferCopy"]
 visible = false
-material = ExtResource( 14 )
+material = ExtResource( 11 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 824.0
@@ -182,7 +182,7 @@ rect = Rect2( 0, 0, 200, 200 )
 
 [node name="ColorRect" type="ColorRect" parent="ColorSplash/BackBufferCopy"]
 visible = false
-material = ExtResource( 13 )
+material = ExtResource( 20 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 824.0
@@ -196,7 +196,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 10 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -207,7 +207,7 @@ rect = Rect2( 0, 0, 200, 200 )
 
 [node name="ColorRect" type="ColorRect" parent="Bloom/BackBufferCopy"]
 visible = false
-material = ExtResource( 17 )
+material = ExtResource( 15 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 824.0
@@ -221,7 +221,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
@@ -233,7 +233,7 @@ rect = Rect2( 0, 0, 200, 200 )
 
 [node name="ColorRect" type="ColorRect" parent="ChromaticAberration/BackBufferCopy"]
 visible = false
-material = ExtResource( 15 )
+material = ExtResource( 12 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 824.0
@@ -247,14 +247,14 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 9 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="Noise"]
 visible = false
-material = ExtResource( 16 )
+material = ExtResource( 13 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -266,14 +266,14 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 12 )
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="Glitch"]
 visible = false
-material = ExtResource( 19 )
+material = ExtResource( 16 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -285,14 +285,14 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 11 )
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="FogOverlay"]
 visible = false
-material = ExtResource( 18 )
+material = ExtResource( 21 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -304,14 +304,14 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 7 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ColorRect" type="ColorRect" parent="Vignette"]
 visible = false
-material = ExtResource( 2 )
+material = ExtResource( 14 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2

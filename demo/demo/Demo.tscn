@@ -11,7 +11,7 @@
 [ext_resource path="res://demo/assets/player/player.gd" type="Script" id=9]
 [ext_resource path="res://demo/assets/tile/tile.res" type="TileSet" id=10]
 [ext_resource path="res://demo/assets/env/env.res" type="TileSet" id=11]
-[ext_resource path="res://Post Porcessing tool/PostProcessing_tool.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Post processing tool/PostProcessing_tool.tscn" type="PackedScene" id=12]
 [ext_resource path="res://demo/Demo.gd" type="Script" id=13]
 
 [sub_resource type="OpenSimplexNoise" id=1]
@@ -71,7 +71,7 @@ vignette_scale = 0.81
 position = Vector2( 513.919, 278.685 )
 frames = SubResource( 3 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 9 )
 
