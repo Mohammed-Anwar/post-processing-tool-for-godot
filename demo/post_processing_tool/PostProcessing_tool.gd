@@ -10,8 +10,8 @@ var adjustment_saturation = 1.0
 # white_balance
 var white_balance_show = false setget set_white_balance
 var white_balance_temperature = 0.0
-var white_balance_warm_color = preload("res://Post Processing tool/assets/warm_color.res")
-var white_balance_cool_color = preload("res://Post Processing tool/assets/cool_color.res")
+var white_balance_warm_color = preload("res://post_processing_tool/assets/warm_color.res")
+var white_balance_cool_color = preload("res://post_processing_tool/assets/cool_color.res")
 var white_balance_layer = 1
 var white_balance_tint = 0.0
 
